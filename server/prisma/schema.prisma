@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  password  String
+  role      Role
+  createdAt DateTime   @default(now())
+  documents Document[]
+  approvals Approval[]
+}
+
+model Document {
+  id        String         @id @default(uuid())
+  title     String
+  status    DocumentStatus
+  ownerId   String
+  owner     User           @relation(fields: [ownerId], references: [id])
+  createdAt DateTime       @default(now())
+  approvals Approval[]
+}
+
+model Approval {
+  id         String           @id @default(uuid())
+  decision   ApprovalDecision
+  documentId String
+  approverId String
+  decidedAt  DateTime         @default(now())
+  document   Document         @relation(fields: [documentId], references: [id])
+  approver   User             @relation(fields: [approverId], references: [id])
+}
+
+enum Role {
+  CONSULTANT
+  CHAMPION
+  COUNCIL
+}
+
+enum DocumentStatus {
+  DRAFT
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+enum ApprovalDecision {
+  APPROVED
+  REJECTED
+}
