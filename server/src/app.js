@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const authRoutes = require('./routes/auth.routes');
-const userService = require('./services/user.service');
+const resourceRoutes = require("./routes/resource.routes");
 
 const app = express();
 
@@ -11,17 +11,10 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));
-app.use('/api/auth', authRoutes);
+app.use('/api', authRoutes);
 
-// create user via service
-app.post('/api/users', async (req, res, next) => {
-  try {
-    const user = await userService.createUser(req.body);
-    res.status(201).json(user);
-  } catch (err) {
-    next(err);
-  }
-});
+// mounting resource routes
+app.use("/api/resources", resourceRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
