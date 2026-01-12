@@ -4,7 +4,7 @@ export default function ResourceUpload({ token }) {
   const [form, setForm] = useState({
     title: "",
     content: "",
-    status: "DRAFT",
+    resourceType: "PROJECT_DOCUMENTATION",
     createdAt: "",
   });
   const [statusMsg, setStatusMsg] = useState("");
@@ -13,14 +13,15 @@ export default function ResourceUpload({ token }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  async function onSubmit(e) {
+  async function onSubmit(e, status) {
     e.preventDefault();
     setStatusMsg("Saving...");
 
     const payload = {
       title: form.title,
       content: form.content,
-      status: form.status,
+      resourceType: form.resourceType,
+      status,
       createdAt: form.createdAt ? new Date(form.createdAt).toISOString() : undefined,
     };
 
@@ -40,7 +41,12 @@ export default function ResourceUpload({ token }) {
       }
 
       setStatusMsg("Resource created");
-      setForm({ title: "", content: "", status: "DRAFT", createdAt: "" });
+      setForm({
+        title: "",
+        content: "",
+        resourceType: "PROJECT_DOCUMENTATION",
+        createdAt: ""
+      });
     } catch (err) {
       setStatusMsg(err.message);
     }
@@ -48,7 +54,7 @@ export default function ResourceUpload({ token }) {
 
   return (
     <div className="page">
-      <form className="user-card" onSubmit={onSubmit}>
+      <form className="user-card">
         <h2>Resource Upload</h2>
 
         <label className="field">
@@ -62,26 +68,22 @@ export default function ResourceUpload({ token }) {
         </label>
 
         <label className="field">
-          Status
-          <select name="status" value={form.status} onChange={onChange}>
-            <option value="DRAFT">DRAFT</option>
-            <option value="SUBMITTED">SUBMITTED</option>
-            <option value="APPROVED">APPROVED</option>
-            <option value="REJECTED">REJECTED</option>
+          Resource Type
+          <select name="resourceType" value={form.resourceType} onChange={onChange}>
+            <option value="PROJECT_DOCUMENTATION">Project Documentation</option>
+            <option value="CLIENT_DATA">Client Data</option>
+            <option value="TECHNICAL_RESOURCE">Technical Resource</option>
           </select>
         </label>
 
-        <label className="field">
-          Created At (optional)
-          <input
-            name="createdAt"
-            type="datetime-local"
-            value={form.createdAt}
-            onChange={onChange}
-          />
-        </label>
-
-        <button type="submit">Save</button>
+        <div className="button-row">
+          <button type="button" onClick={(e) => onSubmit(e, "DRAFT")}>
+            Save Draft
+          </button>
+          <button type="button" onClick={(e) => onSubmit(e, "SUBMITTED")}>
+            Submit Resource
+          </button>
+        </div>
         {statusMsg && <p className="status">{statusMsg}</p>}
       </form>
     </div>
