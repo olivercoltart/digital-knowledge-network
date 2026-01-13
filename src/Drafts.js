@@ -25,8 +25,24 @@ export default function Drafts({ token }) {
       <h2>My Drafts</h2>
       {status && <p>{status}</p>}
       {items.map((d) => (
-        <div key={d.id}>
+        <div className="resource-card" key={d.id}>
           <strong>{d.title}</strong>
+          {d.verified && (
+            <span
+              className="verified-badge"
+              title="This resource has been verified by the Knowledge Governance Council"
+            >
+              Verified
+            </span>
+          )}
+          {d.dataCompliant && (
+            <span
+              className="compliance-badge"
+              title="This resource has been confirmed as data compliant by a data officer"
+            >
+              &#128274;
+            </span>
+          )}
           <div>Type: {d.resourceType}</div>
           <div>{d.content}</div>
         </div>

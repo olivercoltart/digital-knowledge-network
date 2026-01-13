@@ -5,6 +5,8 @@ export default function SearchResources({ token }) {
   const [status, setStatus] = useState("Loading...");
   const [query, setQuery] = useState("");
   const [type, setType] = useState("ALL");
+  const [onlyVerified, setOnlyVerified] = useState(false);
+  const [onlyCompliant, setOnlyCompliant] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -30,17 +32,19 @@ export default function SearchResources({ token }) {
         !q ||
         item.title.toLowerCase().includes(q) ||
         item.content.toLowerCase().includes(q);
-      return matchesType && matchesText;
+      const matchesVerified = !onlyVerified || item.verified;
+      const matchesCompliant = !onlyCompliant || item.dataCompliant;
+      return matchesType && matchesText && matchesVerified && matchesCompliant;
     });
-  }, [items, query, type]);
+  }, [items, query, type, onlyVerified, onlyCompliant]);
 
   return (
     <div>
       <h2>Search Resources</h2>
 
       <label className="field">
-        Keyword
         <input
+          className="search-input"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search title or content"
@@ -48,8 +52,8 @@ export default function SearchResources({ token }) {
       </label>
 
       <label className="field">
-        Resource Type
-        <select value={type} onChange={(e) => setType(e.target.value)}>
+        <strong>Resource Type</strong>
+        <select className="type-select" value={type} onChange={(e) => setType(e.target.value)}>
           <option value="ALL">All</option>
           <option value="PROJECT_DOCUMENTATION">Project Documentation</option>
           <option value="CLIENT_DATA">Client Data</option>
@@ -57,10 +61,49 @@ export default function SearchResources({ token }) {
         </select>
       </label>
 
+      <label className="field checkbox-field">
+        <input
+          type="checkbox"
+          checked={onlyVerified}
+          onChange={(e) => setOnlyVerified(e.target.checked)}
+        />
+        <strong>Verified</strong>
+      </label>
+
+      <label className="field checkbox-field">
+        <input
+          type="checkbox"
+          checked={onlyCompliant}
+          onChange={(e) => setOnlyCompliant(e.target.checked)}
+        />
+        <strong>Data Compliant</strong>
+      </label>
+
       {status && <p>{status}</p>}
       {filtered.map((item) => (
-        <div key={item.id}>
+        <div className="resource-card" key={item.id}>
           <strong>{item.title}</strong>
+          {item.verified && (
+            <span
+              className="verified-badge"
+              title="This resource has been verified by the Knowledge Governance Council"
+            >
+              Verified
+            </span>
+          )}
+          {item.dataCompliant && (
+            <span
+              className="compliance-badge"
+              title="This resource has been confirmed as data compliant by a data officer"
+            >
+              &#128274;
+            </span>
+          )}
+          {item.status === "APPROVED" && !item.verified && !item.dataCompliant && (
+            <div className="resource-warning">
+              This resource has not been verified by the knowledge governance council or data officers - be careful when sharing this document
+            </div>
+          )}
           <div>Type: {item.resourceType}</div>
           <div>{item.content}</div>
         </div>

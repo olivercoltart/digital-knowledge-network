@@ -31,8 +31,29 @@ export default function ResourceProgress({ token }) {
       <h2>Resource Progress</h2>
       {status && <p>{status}</p>}
       {items.map((item) => (
-        <div key={item.id}>
+        <div className="resource-card" key={item.id}>
           <strong>{item.title}</strong> — {STATUS_LABELS[item.status] || item.status}
+          {item.verified && (
+            <span
+              className="verified-badge"
+              title="This resource has been verified by the Knowledge Governance Council"
+            >
+              Verified
+            </span>
+          )}
+          {item.dataCompliant && (
+            <span
+              className="compliance-badge"
+              title="This resource has been confirmed as data compliant by a data officer"
+            >
+              &#128274;
+            </span>
+          )}
+          {item.status === "APPROVED" && !item.verified && !item.dataCompliant && (
+            <div className="resource-warning">
+              This resource has not been verified by the knowledge governance council or data officers - be careful when sharing this document
+            </div>
+          )}
           {item.approvals?.[0]?.feedback && (
             <div>Feedback: {item.approvals[0].feedback}</div>
           )}

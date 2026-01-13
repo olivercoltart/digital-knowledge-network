@@ -60,8 +60,24 @@ export default function ReviewResources({ token }) {
       <h2>Review Resources</h2>
       {status && <p>{status}</p>}
       {items.map((item) => (
-        <div key={item.id}>
+        <div className="resource-card" key={item.id}>
           <strong>{item.title}</strong>
+          {item.verified && (
+            <span
+              className="verified-badge"
+              title="This resource has been verified by the Knowledge Governance Council"
+            >
+              Verified
+            </span>
+          )}
+          {item.dataCompliant && (
+            <span
+              className="compliance-badge"
+              title="This resource has been confirmed as data compliant by a data officer"
+            >
+              &#128274;
+            </span>
+          )}
           <div>Type: {item.resourceType}</div>
           <div>{item.content}</div>
           <div>Status: {item.status}</div>
@@ -80,12 +96,14 @@ export default function ReviewResources({ token }) {
               </label>
               <div className="button-row">
                 <button
+                  className="button-approve"
                   type="button"
                   onClick={() => updateStatus(item.id, "APPROVED")}
                 >
                   Approve
                 </button>
                 <button
+                  className="button-reject"
                   type="button"
                   onClick={() => updateStatus(item.id, "REJECTED")}
                 >

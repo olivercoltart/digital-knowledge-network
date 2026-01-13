@@ -9,6 +9,8 @@ import Drafts from "./Drafts";
 import ReviewResources from "./ReviewResources";
 import ResourceProgress from "./ResourceProgress";
 import SearchResources from "./SearchResources";
+import AuditResources from "./AuditResources";
+import DataCompliance from "./DataCompliance";
 import "./App.css";
 
 function App() {
@@ -17,6 +19,24 @@ function App() {
   return (
     <BrowserRouter>
       {session ? (
+        session.user.role === "DATA_OFFICER" ? (
+          <div className="App">
+            <Routes>
+              <Route
+                path="/login"
+                element={<DataCompliance token={session.token} />}
+              />
+              <Route
+                path="/"
+                element={<DataCompliance token={session.token} />}
+              />
+              <Route
+                path="/compliance"
+                element={<DataCompliance token={session.token} />}
+              />
+            </Routes>
+          </div>
+        ) : (
         <div className="layout">
           <Sidebar userRole={session.user.role} />
           <main className="content">
@@ -54,9 +74,14 @@ function App() {
                 path="/review"
                 element={<ReviewResources token={session.token} />}
               />
+              <Route
+                path="/audit"
+                element={<AuditResources token={session.token} />}
+              />
             </Routes>
           </main>
         </div>
+        )
       ) : (
         <div className="App">
           <Routes>

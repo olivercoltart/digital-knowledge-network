@@ -80,7 +80,7 @@ export default function ResourceUpload({ token }) {
           <button type="button" onClick={(e) => onSubmit(e, "DRAFT")}>
             Save Draft
           </button>
-          <button type="button" onClick={(e) => onSubmit(e, "SUBMITTED")}>
+          <button className="button-approve" type="button" onClick={(e) => onSubmit(e, "SUBMITTED")}>
             Submit Resource
           </button>
         </div>

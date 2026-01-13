@@ -23,6 +23,8 @@ model Document {
   content   String
   resourceType ResourceType?
   status    DocumentStatus
+  verified  Boolean        @default(false)
+  dataCompliant Boolean     @default(false)
   ownerId   String
   owner     User           @relation(fields: [ownerId], references: [id])
   createdAt DateTime       @default(now())
