@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 export default function ReviewResources({ token }) {
   const [items, setItems] = useState([]);
   const [status, setStatus] = useState("Loading...");
+  const [activeId, setActiveId] = useState(null);
+  const [feedback, setFeedback] = useState({});
 
   async function updateStatus(id, nextStatus) {
     try {
@@ -14,7 +16,7 @@ export default function ReviewResources({ token }) {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ status: nextStatus }),
+          body: JSON.stringify({ status: nextStatus, feedback: feedback[id] || "" }),
         }
       );
       if (!res.ok) {
@@ -26,6 +28,7 @@ export default function ReviewResources({ token }) {
           item.id === id ? { ...item, status: nextStatus } : item
         )
       );
+      setActiveId(null);
     } catch (err) {
       setStatus(err.message);
     }
@@ -62,20 +65,42 @@ export default function ReviewResources({ token }) {
           <div>Type: {item.resourceType}</div>
           <div>{item.content}</div>
           <div>Status: {item.status}</div>
-          <div className="button-row">
-            <button
-              type="button"
-              onClick={() => updateStatus(item.id, "APPROVED")}
-            >
-              Approve
+          {activeId === item.id ? (
+            <div>
+              <label className="field">
+                Feedback
+                <textarea
+                  name="feedback"
+                  value={feedback[item.id] || ""}
+                  onChange={(e) =>
+                    setFeedback((prev) => ({ ...prev, [item.id]: e.target.value }))
+                  }
+                  required
+                />
+              </label>
+              <div className="button-row">
+                <button
+                  type="button"
+                  onClick={() => updateStatus(item.id, "APPROVED")}
+                >
+                  Approve
+                </button>
+                <button
+                  type="button"
+                  onClick={() => updateStatus(item.id, "REJECTED")}
+                >
+                  Reject
+                </button>
+                <button type="button" onClick={() => setActiveId(null)}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button type="button" onClick={() => setActiveId(item.id)}>
+              Review Resource
             </button>
-            <button
-              type="button"
-              onClick={() => updateStatus(item.id, "REJECTED")}
-            >
-              Reject
-            </button>
-          </div>
+          )}
         </div>
       ))}
     </div>

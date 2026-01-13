@@ -9,6 +9,7 @@ export default function Sidebar({ userRole }) {
       <Link to="/search">Search Resources</Link>
       <Link to="/recommended">Recommended Resources</Link>
       <Link to="/drafts">Drafts</Link>
+      <Link to="/progress">Resource Progress</Link>
       {userRole === "CHAMPION" && <Link to="/review">Review Resources</Link>}
     </nav>
   );

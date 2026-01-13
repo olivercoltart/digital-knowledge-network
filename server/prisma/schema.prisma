@@ -34,6 +34,7 @@ model Approval {
   decision   ApprovalDecision
   documentId String
   approverId String
+  feedback   String?
   decidedAt  DateTime         @default(now())
   document   Document         @relation(fields: [documentId], references: [id])
   approver   User             @relation(fields: [approverId], references: [id])

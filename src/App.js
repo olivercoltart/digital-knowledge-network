@@ -7,6 +7,8 @@ import Sidebar from "./Sidebar";
 import ResourceUpload from "./ResourceUpload";
 import Drafts from "./Drafts";
 import ReviewResources from "./ReviewResources";
+import ResourceProgress from "./ResourceProgress";
+import SearchResources from "./SearchResources";
 import "./App.css";
 
 function App() {
@@ -34,7 +36,7 @@ function App() {
               />
               <Route
                 path="/search"
-                element={<div>Search Resources (coming soon)</div>}
+                element={<SearchResources token={session.token} />}
               />
               <Route
                 path="/recommended"
@@ -43,6 +45,10 @@ function App() {
               <Route
                 path="/drafts"
                 element={<Drafts token={session.token} />}
+              />
+              <Route
+                path="/progress"
+                element={<ResourceProgress token={session.token} />}
               />
               <Route
                 path="/review"
