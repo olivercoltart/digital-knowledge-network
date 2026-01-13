@@ -5,6 +5,8 @@ import LoginForm from "./LoginForm";
 import Dashboard from "./Dashboard";
 import Sidebar from "./Sidebar";
 import ResourceUpload from "./ResourceUpload";
+import Drafts from "./Drafts";
+import ReviewResources from "./ReviewResources";
 import "./App.css";
 
 function App() {
@@ -14,13 +16,16 @@ function App() {
     <BrowserRouter>
       {session ? (
         <div className="layout">
-          <Sidebar />
+          <Sidebar userRole={session.user.role} />
           <main className="content">
             <Routes>
               <Route
                 path="/login"
                 element={
-                  <Dashboard user={session.user} onLogout={() => setSession(null)} />
+                  <Dashboard
+                    user={session.user}
+                    onLogout={() => setSession(null)}
+                  />
                 }
               />
               <Route
@@ -34,6 +39,14 @@ function App() {
               <Route
                 path="/recommended"
                 element={<div>Recommended Resources (coming soon)</div>}
+              />
+              <Route
+                path="/drafts"
+                element={<Drafts token={session.token} />}
+              />
+              <Route
+                path="/review"
+                element={<ReviewResources token={session.token} />}
               />
             </Routes>
           </main>
