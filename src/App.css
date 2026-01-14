@@ -1,10 +1,46 @@
 .App {
   text-align: center;
+  width: 100%;
 }
 
 body {
   margin: 0;
   background: #5993da;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: #0f2a5f;
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  justify-content: center;
+}
+
+.brand-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: conic-gradient(from 210deg, #2fd1ff, #4b7dff, #24ff9c, #2fd1ff);
+}
+
+.brand-name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.app-body {
+  flex: 1;
+  display: flex;
 }
 
 .App-logo {
@@ -43,11 +79,21 @@ body {
 }
 
 .page {
-  min-height: 100vh;
+  min-height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #5993da;
+  width: 100%;
+}
+
+.dashboard-page {
+  align-items: center;
+  justify-content: flex-start;
+  padding: 24px;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
 }
 
 .user-card {
@@ -60,10 +106,63 @@ body {
   background: #1e5bd8;
   color: #ffffff;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+  margin: 0 auto;
 }
 
 .user-card h2 {
   margin: 0 0 6px;
+}
+
+.dashboard-card {
+  gap: 8px;
+  width: fit-content;
+}
+
+.dashboard-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  width: 100%;
+}
+
+.dashboard-title {
+  margin: 0;
+  color: #000000;
+  text-align: center;
+  width: 100%;
+}
+
+.dashboard-card h2 {
+  margin: 0 0 2px;
+}
+
+.dashboard-card p {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.dashboard-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.dashboard-section h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dashboard-card button {
+  align-self: center;
+  padding: 8px 14px;
 }
 
 .field {
@@ -172,7 +271,7 @@ button {
 }
 
 .layout {
-  min-height: 100vh;
+  min-height: 100%;
   display: grid;
   grid-template-columns: 220px 1fr;
 }
@@ -209,11 +308,17 @@ button {
 
 .resource-upload-card {
   width: 520px;
+  margin: 0 auto;
 }
 
 .resource-upload-card textarea {
   min-height: 300px;
 }
+
+.resource-upload-page {
+  width: 100%;
+}
+
 
 .warning-badge {
   display: inline-block;

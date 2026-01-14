@@ -70,7 +70,7 @@ export default function CreateUserForm() {
           <select name="role" value={form.role} onChange={onChange}>
             <option value="CONSULTANT">Consultant</option>
             <option value="CHAMPION">Knowledge Champion</option>
-            <option value="COUNCIL">Governance Coucil</option>
+            <option value="COUNCIL">Knowledge Governance Council</option>
             <option value="DATA_OFFICER">Data Officer</option>
           </select>
         </label>

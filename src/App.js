@@ -18,78 +18,87 @@ function App() {
 
   return (
     <BrowserRouter>
-      {session ? (
-        session.user.role === "DATA_OFFICER" ? (
-          <div className="App">
-            <Routes>
-              <Route
-                path="/login"
-                element={<DataCompliance token={session.token} />}
-              />
-              <Route
-                path="/"
-                element={<DataCompliance token={session.token} />}
-              />
-              <Route
-                path="/compliance"
-                element={<DataCompliance token={session.token} />}
-              />
-            </Routes>
-          </div>
-        ) : (
-        <div className="layout">
-          <Sidebar userRole={session.user.role} />
-          <main className="content">
-            <Routes>
-              <Route
-                path="/login"
-                element={
-                  <Dashboard
-                    user={session.user}
-                    onLogout={() => setSession(null)}
+      <div className="app-shell">
+        <header className="brand-header">
+          <div className="brand-logo" aria-hidden="true" />
+          <span className="brand-name">Velion Dynamics</span>
+        </header>
+        <div className="app-body">
+          {session ? (
+            session.user.role === "DATA_OFFICER" ? (
+              <div className="App">
+                <Routes>
+                  <Route
+                    path="/login"
+                    element={<DataCompliance token={session.token} />}
                   />
-                }
-              />
-              <Route
-                path="/submit"
-                element={<ResourceUpload token={session.token} />}
-              />
-              <Route
-                path="/search"
-                element={<SearchResources token={session.token} />}
-              />
-              <Route
-                path="/recommended"
-                element={<div>Recommended Resources (coming soon)</div>}
-              />
-              <Route
-                path="/drafts"
-                element={<Drafts token={session.token} />}
-              />
-              <Route
-                path="/progress"
-                element={<ResourceProgress token={session.token} />}
-              />
-              <Route
-                path="/review"
-                element={<ReviewResources token={session.token} />}
-              />
-              <Route
-                path="/audit"
-                element={<AuditResources token={session.token} />}
-              />
-            </Routes>
-          </main>
+                  <Route
+                    path="/"
+                    element={<DataCompliance token={session.token} />}
+                  />
+                  <Route
+                    path="/compliance"
+                    element={<DataCompliance token={session.token} />}
+                  />
+                </Routes>
+              </div>
+            ) : (
+              <div className="layout">
+                <Sidebar userRole={session.user.role} />
+                <main className="content">
+                  <Routes>
+                    <Route
+                      path="/login"
+                      element={
+                        <Dashboard
+                          user={session.user}
+                          token={session.token}
+                          onLogout={() => setSession(null)}
+                        />
+                      }
+                    />
+                    <Route
+                      path="/submit"
+                      element={<ResourceUpload token={session.token} />}
+                    />
+                    <Route
+                      path="/search"
+                      element={<SearchResources token={session.token} />}
+                    />
+                    <Route
+                      path="/recommended"
+                      element={<div>Recommended Resources (coming soon)</div>}
+                    />
+                    <Route
+                      path="/drafts"
+                      element={<Drafts token={session.token} />}
+                    />
+                    <Route
+                      path="/progress"
+                      element={<ResourceProgress token={session.token} />}
+                    />
+                    <Route
+                      path="/review"
+                      element={<ReviewResources token={session.token} />}
+                    />
+                    <Route
+                      path="/audit"
+                      element={<AuditResources token={session.token} />}
+                    />
+                  </Routes>
+                </main>
+              </div>
+            )
+          ) : (
+            <div className="App">
+              <Routes>
+                <Route path="/" element={<CreateUserForm />} />
+                <Route path="/login" element={<LoginForm onLogin={setSession} />} />
+              </Routes>
+            </div>
+          )}
         </div>
-        )
-      ) : (
-        <div className="App">
-          <Routes>
-            <Route path="/" element={<CreateUserForm />} />
-            <Route path="/login" element={<LoginForm onLogin={setSession} />} />
-          </Routes>
-        </div>
-      )}
+      </div>
     </BrowserRouter>
   );
 }
