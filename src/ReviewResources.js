@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getResourceTypeLabel } from "./utils/resourceLabels";
 
 export default function ReviewResources({ token }) {
   const [items, setItems] = useState([]);
@@ -78,7 +79,7 @@ export default function ReviewResources({ token }) {
               &#128274;
             </span>
           )}
-          <div>Type: {item.resourceType}</div>
+          <div>Type: {getResourceTypeLabel(item.resourceType)}</div>
           <div>{item.content}</div>
           <div>Status: {item.status}</div>
           {activeId === item.id ? (

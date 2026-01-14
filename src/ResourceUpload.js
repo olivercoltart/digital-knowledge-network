@@ -54,7 +54,7 @@ export default function ResourceUpload({ token }) {
 
   return (
     <div className="page">
-      <form className="user-card">
+      <form className="user-card resource-upload-card">
         <h2>Resource Upload</h2>
 
         <label className="field">

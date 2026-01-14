@@ -130,6 +130,20 @@ router.patch("/:id/status", auth, requireRole("CHAMPION"), async (req, res, next
   }
 });
 
+// PATCH update draft fields for owner
+router.patch("/:id", auth, async (req, res, next) => {
+  try {
+    const { title, content, resourceType } = req.body;
+    const updated = await prisma.document.update({
+      where: { id: req.params.id },
+      data: { title, content, resourceType }
+    });
+    res.json(updated);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // PATCH verify resource (COUNCIL only)
 router.patch("/:id/verify", auth, requireRole("COUNCIL"), async (req, res, next) => {
   try {

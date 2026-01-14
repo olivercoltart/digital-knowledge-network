@@ -50,9 +50,12 @@ export default function ResourceProgress({ token }) {
             </span>
           )}
           {item.status === "APPROVED" && !item.verified && !item.dataCompliant && (
-            <div className="resource-warning">
-              This resource has not been verified by the knowledge governance council or data officers - be careful when sharing this document
-            </div>
+            <span
+              className="warning-badge"
+              title="This resource has not been verified by the knowledge governance council or data officers - be careful when sharing this document"
+            >
+              Warning
+            </span>
           )}
           {item.approvals?.[0]?.feedback && (
             <div>Feedback: {item.approvals[0].feedback}</div>

@@ -1,15 +1,8 @@
-//  id        
-//   title     
-//   status    
-//   ownerId   
-//   owner     
-//   createdAt
-//   approvals
 const prisma = require("../prisma/client");
 
 async function createResource({ title, content, resourceType, status, ownerId, createdAt }) {
 
-  // Create user in DB
+  // Create resource in DB
   const resource = await prisma.document.create({
     data: {
       title,

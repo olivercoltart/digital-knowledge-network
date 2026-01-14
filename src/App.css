@@ -206,3 +206,23 @@ button {
   border-radius: 10px;
   background: #cfe2ff;
 }
+
+.resource-upload-card {
+  width: 520px;
+}
+
+.resource-upload-card textarea {
+  min-height: 300px;
+}
+
+.warning-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #b42318;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  vertical-align: middle;
+}

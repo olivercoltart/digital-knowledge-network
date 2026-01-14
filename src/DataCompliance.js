@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getResourceTypeLabel } from "./utils/resourceLabels";
 
 export default function DataCompliance({ token }) {
   const [items, setItems] = useState([]);
@@ -60,11 +61,14 @@ export default function DataCompliance({ token }) {
             </span>
           )}
           {item.status === "APPROVED" && !item.verified && !item.dataCompliant && (
-            <div className="resource-warning">
-              This resource has not been verified by the knowledge governance council or data officers - be careful when sharing this document
-            </div>
+            <span
+              className="warning-badge"
+              title="This resource has not been verified by the knowledge governance council or data officers - be careful when sharing this document"
+            >
+              Warning
+            </span>
           )}
-          <div>Type: {item.resourceType}</div>
+          <div>Type: {getResourceTypeLabel(item.resourceType)}</div>
           <div>{item.content}</div>
           <div>Status: {item.status}</div>
           <div className="button-row">
