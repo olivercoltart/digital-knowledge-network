@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function ResourceUpload({ token }) {
   const [form, setForm] = useState({
     title: "",
@@ -26,7 +28,7 @@ export default function ResourceUpload({ token }) {
     };
 
     try {
-      const res = await fetch("http://localhost:4000/api/resources", {
+      const res = await fetch(`${API_URL}/api/resources`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

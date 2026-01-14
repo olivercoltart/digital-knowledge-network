@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { getResourceTypeLabel } from "./utils/resourceLabels";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function SearchResources({ token }) {
   const [items, setItems] = useState([]);
   const [status, setStatus] = useState("Loading...");
@@ -12,7 +14,7 @@ export default function SearchResources({ token }) {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch("http://localhost:4000/api/resources/approved", {
+        const res = await fetch(`${API_URL}/api/resources/approved`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();

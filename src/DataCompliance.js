@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { getResourceTypeLabel } from "./utils/resourceLabels";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function DataCompliance({ token }) {
   const [items, setItems] = useState([]);
   const [status, setStatus] = useState("Loading...");
 
   async function markCompliant(id) {
     try {
-      const res = await fetch(`http://localhost:4000/api/resources/${id}/compliant`, {
+      const res = await fetch(`${API_URL}/api/resources/${id}/compliant`, {
         method: "PATCH",
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -28,7 +30,7 @@ export default function DataCompliance({ token }) {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch("http://localhost:4000/api/resources/compliance", {
+        const res = await fetch(`${API_URL}/api/resources/compliance`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (!res.ok) {

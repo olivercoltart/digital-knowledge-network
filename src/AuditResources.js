@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { getResourceTypeLabel } from "./utils/resourceLabels";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function AuditResources({ token }) {
   const [items, setItems] = useState([]);
   const [status, setStatus] = useState("Loading...");
 
   async function verifyResource(id) {
     try {
-      const res = await fetch(`http://localhost:4000/api/resources/${id}/verify`, {
+      const res = await fetch(`${API_URL}/api/resources/${id}/verify`, {
         method: "PATCH",
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -32,7 +34,7 @@ export default function AuditResources({ token }) {
     }
 
     try {
-      const res = await fetch(`http://localhost:4000/api/resources/${id}`, {
+      const res = await fetch(`${API_URL}/api/resources/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -49,7 +51,7 @@ export default function AuditResources({ token }) {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch("http://localhost:4000/api/resources/audit", {
+        const res = await fetch(`${API_URL}/api/resources/audit`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (!res.ok) {

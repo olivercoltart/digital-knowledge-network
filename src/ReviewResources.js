@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getResourceTypeLabel } from "./utils/resourceLabels";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function ReviewResources({ token }) {
   const [items, setItems] = useState([]);
   const [status, setStatus] = useState("Loading...");
@@ -10,7 +12,7 @@ export default function ReviewResources({ token }) {
   async function updateStatus(id, nextStatus) {
     try {
       const res = await fetch(
-        `http://localhost:4000/api/resources/${id}/status`,
+        `${API_URL}/api/resources/${id}/status`,
         {
           method: "PATCH",
           headers: {
@@ -38,7 +40,7 @@ export default function ReviewResources({ token }) {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch("http://localhost:4000/api/resources/review", {
+        const res = await fetch(`${API_URL}/api/resources/review`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) {

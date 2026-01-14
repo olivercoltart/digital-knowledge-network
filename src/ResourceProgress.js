@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const STATUS_LABELS = {
   SUBMITTED: "Submitted",
   APPROVED: "Approved",
@@ -13,7 +15,7 @@ export default function ResourceProgress({ token }) {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch("http://localhost:4000/api/resources/progress", {
+        const res = await fetch(`${API_URL}/api/resources/progress`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getResourceTypeLabel } from "./utils/resourceLabels";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function Drafts({ token }) {
   const [items, setItems] = useState([]);
   const [status, setStatus] = useState("Loading...");
@@ -14,7 +16,7 @@ export default function Drafts({ token }) {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch("http://localhost:4000/api/resources/drafts", {
+        const res = await fetch(`${API_URL}/api/resources/drafts`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -71,7 +73,7 @@ export default function Drafts({ token }) {
                   onClick={async () => {
                     try {
                       const res = await fetch(
-                        `http://localhost:4000/api/resources/${d.id}`,
+                        `${API_URL}/api/resources/${d.id}`,
                         {
                           method: "PATCH",
                           headers: {
